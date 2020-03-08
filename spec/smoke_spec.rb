@@ -15,7 +15,7 @@ describe 'smoke' do
     expect(page).to have_content(expAddress)
   end
 
-  it 'should correctly fill out and submit form' do
+  it 'should fill out and submit form w valid data' do
     find(id:'ember572').click
     within('.expanded .nav-lefthand-form-container') do
       fill_in 'poi_name', with: name
@@ -26,6 +26,7 @@ describe 'smoke' do
       click_button(text:'Odaberite kategoriju')
       find('.category-selector-view .row select').first(:option,'Sport').select_option
       fill_in 'poi_mobile_phone', with: mob
+      find_button(text:'Kreiraj').click
     end
     expect(page).to have_button(text:'Predloži izmjene')
   end
