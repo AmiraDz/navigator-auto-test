@@ -26,7 +26,6 @@ describe 'smoke' do
       click_button(text:'Odaberite kategoriju')
       find('.category-selector-view .row select').first(:option,'Sport').select_option
       fill_in 'poi_mobile_phone', with: mob
-      find_button(text:'Kreiraj').click
     end
     expect(page).to have_button(text:'Predloži izmjene')
   end
