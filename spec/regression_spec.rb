@@ -10,7 +10,9 @@ address = 'Terezija'
 houseNo = 'bb'
 mob = '062776867'
 
-
+pName = 'Test Name'
+pEmail = 'ime123@bht.ba'
+pComment = 'pravo dobra stranica'
 
 describe 'regression' do
   it 'should search for valid term' do
@@ -69,5 +71,16 @@ describe 'regression' do
     find(class:'food').click
     expect(page).to have_content('ocjena')
   end
+
+  it 'should suggest feature-send comment' do
+    click_on(id:'ember587')
+    fill_in 'name_surname', with: pName
+    fill_in 'email', with: pEmail
+    fill_in 'comment', with: pComment
+    find_button(value:'Pošalji').click
+    expect(page).to have_content('Hvala na poruci! Potrudit ćemo se da što prije reagujemo.')
+  end
+
+
 
 end
