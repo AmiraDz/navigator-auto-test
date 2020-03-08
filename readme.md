@@ -14,5 +14,7 @@ Steps to setup environment:
 Scripts should be run from project root folder (rspec-navigator), entering "rspec ./spec/*rb" to terminal, or just rspec to run all scripts.
 
 Application under test: http://www.navigator.ba/
+
 Project management tool: Trello
+
 Trello board link: https://trello.com/b/JfpMXHsv/qa-amira-dzanovic
