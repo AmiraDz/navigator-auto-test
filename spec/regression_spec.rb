@@ -13,6 +13,17 @@ mob = '062776867'
 pName = 'Test Name'
 pEmail = 'ime123@bht.ba'
 pComment = 'pravo dobra stranica'
+pMob = '062123456'
+pMsg = 'Poruka uspješno poslana. Navigator tim će Vas kontaktirati u roku od 48 sati.'
+
+sSearch = 'dos hermanos'
+sDescrip = 'Divna hrana, divan ambijent'
+sComm = 'Ostavlja bez daha'
+sMsg = 'Zahvaljujemo Vam na predloženim izmjenama. Vaše izmjene će biti vidljive nakon revizije.'
+
+invName = '1234'
+invEmail = '2345'
+invMob = '3456'
 
 describe 'regression' do
   it 'should search for valid term' do
@@ -81,6 +92,38 @@ describe 'regression' do
     expect(page).to have_content('Hvala na poruci! Potrudit ćemo se da što prije reagujemo.')
   end
 
+  it 'should suggest changes to place' do
+    fill_in id:'ember564', with: sSearch
+    find(class:'iconav-search').click
+    find(class:'name').click
+    find_button('Predloži izmjene').click
+    fill_in 'poi_description', with: sDescrip
+    fill_in 'poi_comment', with: sComm
+    find_button('Predloži izmjene').click
+    expect(page).to have_content(sMsg)
+  end
 
+  it 'should claim place w valid data' do
+    fill_in id:'ember564', with: sSearch
+    find(class:'iconav-search').click
+    find(class:'name').click
+    find_button('Vaš objekat?').click
+    fill_in 'Vaše ime', with: pName
+    fill_in 'Vaš email', with: pEmail
+    fill_in 'Vaš telefon', with: pMob
+    find_button('Pošalji').click
+    expect(page).to have_content(pMsg)
+  end
 
+  it 'should claim place w valid data' do
+    fill_in id:'ember564', with: sSearch
+    find(class:'iconav-search').click
+    find(class:'name').click
+    find_button('Vaš objekat?').click
+    fill_in 'Vaše ime', with: invName
+    fill_in 'Vaš email', with: invEmail
+    fill_in 'Vaš telefon', with: invMob
+    find_button('Pošalji').click
+    expect(page).to have_content('Pošalji')
+  end
 end
