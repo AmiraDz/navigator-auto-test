@@ -9,6 +9,7 @@ zip = '71000'
 address = 'Terezija'
 houseNo = 'bb'
 mob = '062776867'
+comm = 'najjače'
 
 pName = 'Test Name'
 pEmail = 'ime123@bht.ba'
@@ -17,6 +18,8 @@ pMob = '062123456'
 pMsg = 'Poruka uspješno poslana. Navigator tim će Vas kontaktirati u roku od 48 sati.'
 
 sSearch = 'dos hermanos'
+sCity = '5555'
+sAddress = '6666'
 sDescrip = 'Divna hrana, divan ambijent'
 sComm = 'Ostavlja bez daha'
 sMsg = 'Zahvaljujemo Vam na predloženim izmjenama. Vaše izmjene će biti vidljive nakon revizije.'
@@ -49,6 +52,7 @@ describe 'regression' do
       click_button(text:'Odaberite kategoriju')
       find('.category-selector-view .row select').first(:option,'Sport').select_option
       fill_in 'poi_mobile_phone', with: mob
+      fill_in 'poi_comment', with: comm
       find_button(text:'Kreiraj').click
     end
     expect(page).to have_button(text:'Predloži izmjene')
@@ -63,6 +67,7 @@ describe 'regression' do
       click_button(text:'Odaberite kategoriju')
       find('.category-selector-view .row select').first(:option,'Sport').select_option
       fill_in 'poi_mobile_phone', with: mob
+      fill_in 'poi_comment', with: comm
       find_button(text:'Kreiraj').click
     end
     expect(page).to have_content('Forma sadrži nevalidne podatke. Molimo ispravite i pokušajte ponovo')
@@ -105,6 +110,18 @@ describe 'regression' do
     expect(page).to have_content(sMsg)
   end
 
+  it 'should not suggest changes to place w invalid data' do
+    fill_in id:'ember564', with: sSearch
+    find(class:'iconav-search').click
+    find(class:'name').click
+    find_button('Predloži izmjene').click
+    fill_in 'poi_city_name', with: sCity
+    fill_in 'poi_place_id', with: sAddress
+    fill_in 'poi_comment', with: sComm
+    find_button('Predloži izmjene').click
+    expect(page).not_to have_content(sMsg)
+  end
+
   it 'should claim place w valid data' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
@@ -117,7 +134,7 @@ describe 'regression' do
     expect(page).to have_content(pMsg)
   end
 
-  it 'should claim place w valid data' do
+  it 'should not claim place w invalid data' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
     find(class:'name').click
