@@ -83,13 +83,15 @@ describe 'regression' do
     expect(page).to have_content('ocjena')
   end
 
-  it 'should suggest feature-send comment' do
-    click_on(id:'ember587')
-    fill_in 'name_surname', with: pName
-    fill_in 'email', with: pEmail
-    fill_in 'comment', with: pComment
-    find_button(value:'Pošalji').click
-    expect(page).to have_content('Hvala na poruci! Potrudit ćemo se da što prije reagujemo.')
+  it 'should open category list and pick a result' do
+    find(class:'food').click
+    find(class:'name',match: :first).click
+    expect(page).to have_content('Predloži izmjene')
+  end
+
+  it 'should zoom in the map' do
+    find_link('+').click
+    expect(page).to have_content('O Navigatoru')
   end
 
   it 'should suggest changes to place' do
@@ -126,4 +128,14 @@ describe 'regression' do
     find_button('Pošalji').click
     expect(page).to have_content('Pošalji')
   end
+
+  it 'should suggest feature-send comment' do
+    click_on(id:'ember587')
+    fill_in 'name_surname', with: pName
+    fill_in 'email', with: pEmail
+    fill_in 'comment', with: pComment
+    find_button(value:'Pošalji').click
+    expect(page).to have_content('Hvala na poruci! Potrudit ćemo se da što prije reagujemo.')
+  end
+
 end
