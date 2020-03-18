@@ -29,18 +29,19 @@ invEmail = '2345'
 invMob = '3456'
 
 describe 'regression' do
+  #1 search-positive
   it 'should search for valid term' do
     fill_in id:'ember564', with: valSearch
     find(class:'iconav-search').click
     expect(page).to have_content(expAddress)
   end
-
+  #2 search-negative
   it 'should display message for invalid term' do
     fill_in id:'ember564', with: invSearch
     find(class:'iconav-search').click
     expect(page).to have_content('Žao nam je. Nismo uspjeli pronaći niti jedan rezultat za traženu pretragu.')
   end
-
+  #3 createplace-positive
   it 'should fill out and submit form w valid data' do
     find(id:'ember572').click
     within('.expanded .nav-lefthand-form-container') do
@@ -57,7 +58,7 @@ describe 'regression' do
     end
     expect(page).to have_button(text:'Predloži izmjene')
   end
-
+  #4 createplace-negative
   it 'should not submit form w/o required fields' do
     find(id:'ember572').click
     within('.expanded .nav-lefthand-form-container') do
@@ -72,33 +73,59 @@ describe 'regression' do
     end
     expect(page).to have_content('Forma sadrži nevalidne podatke. Molimo ispravite i pokušajte ponovo')
   end
-
+  #5 about-page
   it 'should open about page' do
     click_on(id:'ember633')
     expect(page).to have_content('Novi koncept i vizuelni identitet')
   end
-
+  #6 language-test
+  it 'should switch language to english and back to bosnian' do
+    within('ul.languages') do
+      find(class:'en').click
+    end
+    expect(page).to have_content('Suggest features - Report a problem')
+    within('ul.languages') do
+      find(class:'bs').click
+    end
+    expect(page).to have_content('Predloži ideju - Pošalji komentar')
+  end
+  #7 fb-redirect
   it 'should redirect to fb' do
     find(class:'iconav-facebook').click
     expect(page).to have_content('Navigator.ba')
   end
-
+  #8 category-list
   it 'should display list of items in category' do
     find(class:'food').click
     expect(page).to have_content('ocjena')
   end
-
+  #9 category-result
   it 'should open category list and pick a result' do
     find(class:'food').click
     find(class:'name',match: :first).click
     expect(page).to have_content('Predloži izmjene')
   end
-
+  #10 map-zoomin
   it 'should zoom in the map' do
     find_link('+').click
     expect(page).to have_content('O Navigatoru')
   end
+  #11 map-movement
+  it 'should move the map' do
+    find(class:'leaflet-map-pane').send_keys :arrow_down
+    sleep(5)
+  end
+  #12 map-pins
+  it 'should click map pin' do
+    fill_in id:'ember564', with: sSearch
+    find(class:'iconav-search').click
+    find(class:'.map-marker-icon, .highlighted-map-marker-icon, .place-form-marker-icon').click
+    sleep(5)
+  end
+  #13 place-ratings
 
+  #15 place-photos
+  #16 suggest-changes-positive
   it 'should suggest changes to place' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
@@ -109,7 +136,7 @@ describe 'regression' do
     find_button('Predloži izmjene').click
     expect(page).to have_content(sMsg)
   end
-
+  #17 suggest-changes-negative
   it 'should not suggest changes to place w invalid data' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
@@ -121,7 +148,7 @@ describe 'regression' do
     find_button('Predloži izmjene').click
     expect(page).not_to have_content(sMsg)
   end
-
+  #18 claim-form-positive
   it 'should claim place w valid data' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
@@ -133,7 +160,7 @@ describe 'regression' do
     find_button('Pošalji').click
     expect(page).to have_content(pMsg)
   end
-
+  #19 claim-form-negative
   it 'should not claim place w invalid data' do
     fill_in id:'ember564', with: sSearch
     find(class:'iconav-search').click
@@ -145,7 +172,7 @@ describe 'regression' do
     find_button('Pošalji').click
     expect(page).to have_content('Pošalji')
   end
-
+  #20 suggest-features-form
   it 'should suggest feature-send comment' do
     click_on(id:'ember587')
     fill_in 'name_surname', with: pName
@@ -154,5 +181,4 @@ describe 'regression' do
     find_button(value:'Pošalji').click
     expect(page).to have_content('Hvala na poruci! Potrudit ćemo se da što prije reagujemo.')
   end
-
 end

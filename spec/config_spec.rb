@@ -4,7 +4,7 @@ require 'selenium-webdriver'
 
 RSpec.configure do |config|
   config.before(:all) do
-    Capybara::Session.new :selenium_chrome
+    Capybara::Session.new :selenium
     current_window.fullscreen
   end
 
