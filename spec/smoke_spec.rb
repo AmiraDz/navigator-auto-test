@@ -7,6 +7,7 @@ zip = '71000'
 address = 'Terezija'
 houseNo = 'bb'
 mob = '062776867'
+comm = 'najjače'
 
 describe 'smoke' do
   it 'should search for valid term' do
@@ -26,6 +27,7 @@ describe 'smoke' do
       click_button(text:'Odaberite kategoriju')
       find('.category-selector-view .row select').first(:option,'Sport').select_option
       fill_in 'poi_mobile_phone', with: mob
+      fill_in 'poi_comment', with: comm
     end
     find_button('Kreiraj').click
     expect(page).to have_button(text:'Predloži izmjene')
